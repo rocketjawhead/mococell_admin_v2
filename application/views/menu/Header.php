@@ -136,14 +136,21 @@
               </a>
             </li>
 
-            <li class="menu-item <?php if($this->uri->segment(2) == 'Deposit' || $this->uri->segment(2) == 'deposit'){ echo 'active';}else{echo '';}?>">
+            <li class="menu-item <?php if($this->uri->segment(2) == 'History' || $this->uri->segment(2) == 'history'){ echo 'active';}else{echo '';}?>">
+              <a href="<?php echo base_url('agent/History/');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">History</div>
+              </a>
+            </li>
+
+            <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Deposit' || $this->uri->segment(2) == 'deposit'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Deposit/');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Deposit</div>
               </a>
-            </li>
+            </li> -->
 
-            <li class="menu-item <?php if($this->uri->segment(2) == 'Refund' || $this->uri->segment(2) == 'refund'){ echo 'active';}else{echo '';}?>">
+            <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Refund' || $this->uri->segment(2) == 'refund'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Refund/');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Refund</div>
@@ -155,7 +162,7 @@
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Pending</div>
               </a>
-            </li>
+            </li> -->
 
             <li class="menu-item <?php if($this->uri->segment(2) == 'Help' || $this->uri->segment(2) == 'help'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Help/complaint');?>" class="menu-link">
@@ -164,19 +171,19 @@
               </a>
             </li>
 
-            <li class="menu-item <?php if($this->uri->segment(2) == 'Bank' || $this->uri->segment(2) == 'bank'){ echo 'active';}else{echo '';}?>">
+            <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Bank' || $this->uri->segment(2) == 'bank'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Help/bank');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">List Bank</div>
               </a>
-            </li>
+            </li> -->
 
-            <li class="menu-item <?php if($this->uri->segment(2) == 'Users' || $this->uri->segment(2) == 'users'){ echo 'active';}else{echo '';}?>">
+            <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Users' || $this->uri->segment(2) == 'users'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Users/');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Users</div>
               </a>
-            </li>
+            </li> -->
 
           </ul>
         </aside>

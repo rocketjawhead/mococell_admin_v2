@@ -18,7 +18,9 @@
                 You have done <span class="fw-bold"><?php echo $percent_growth;?> %</span> more sales today. Yuk bisa yuk
               </p>
 
-              <!-- <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a> -->
+              <h2>Balance: <?php echo number_format($total_balance_system);?></h2>
+              <!-- <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> 
+                <?php echo number_format($total_balance_system);?></small> -->
             </div>
           </div>
           <div class="col-sm-5 text-center text-sm-left">
@@ -107,17 +109,12 @@
                   />
                 </div>
               </div>
-              <span>Users</span>
-              <h3 class="card-title text-nowrap mb-1"><?php echo number_format($total_user);?></h3>
+              <span>Total</span>
+              <h3 class="card-title text-nowrap mb-1">
+                <?php echo number_format($total_transaction);?>
+              </h3>
 
-              <!-- 'previous_usr' => $previous_usr,
-              'current_usr' => $current_usr,
-              'previous_depo' => $previous_depo,
-              'current_depo' => $current_depo,
-              'previous_income' => $previous_income,
-              'current_income' => $current_income -->
-
-              <?php 
+              <!-- <?php 
               if ($current_usr >= $previous_usr) {
                 $txt_usr_label = 'text-success';
                 $txt_usr_icon = 'bx bx-up-arrow-alt';
@@ -126,8 +123,10 @@
                 $txt_usr_icon = 'bx bx-down-arrow-alt';
               }
               $txt_usr_value = $current_usr; 
-              ?>
-              <small class="<?php echo $txt_usr_label;?> fw-semibold"><i class="<?php echo $txt_usr_icon;?>"></i> <?php echo $txt_usr_value;?>%</small>
+              ?> -->
+              <small class="<?php echo $txt_usr_label;?> fw-semibold">
+                <!-- <i class="<?php echo $txt_usr_icon;?>"></i> <?php echo $txt_usr_value;?>% -->
+              </small>
             </div>
           </div>
         </div>
@@ -143,30 +142,10 @@
                   />
                 </div>
               </div>
-              <span>Deposit User</span>
-              <h3 class="card-title text-nowrap mb-1"><?php echo number_format($total_deposit_user);?></h3>
-              <?php 
-              if ($current_depo >= $previous_depo) {
-                $txt_depo_label = 'text-success';
-                $txt_depo_icon = 'bx bx-up-arrow-alt';
-              }else{
-                $txt_depo_label = 'text-danger';  
-                $txt_depo_icon = 'bx bx-down-arrow-alt';
-              }
-              if ($previous_depo > 0) {
-                $val_previous_depo = $previous_depo;
-              }else{
-                $val_previous_depo = $current_depo;
-              }
-              if ($current_depo == 0 || $previous_income == 0) {
-                $txt_depo_value = 0;
-              }else{
-                $txt_depo_value = ($current_income/$previous_income)*100;
-              }
-              // $txt_depo_value = ($current_depo/$val_previous_depo)*100;
-              // $txt_depo_value = 0;
-              ?>
-              <small class="<?php echo $txt_depo_label;?> fw-semibold"><i class="<?php echo $txt_depo_icon;?>"></i> <?php echo $txt_depo_value;?>%</small>
+              <span>Qty</span>
+              <h3 class="card-title text-nowrap mb-1">
+                <?php echo number_format($total_qty);?>
+              </h3>
             </div>
           </div>
         </div>
@@ -182,9 +161,9 @@
                   />
                 </div>
               </div>
-              <span>Balance System</span>
+              <span>Visitor</span>
               <h3 class="card-title text-nowrap mb-1"><?php echo number_format($total_balance_system);?></h3>
-              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> <?php echo number_format($total_balance_system);?></small>
+              
             </div>
           </div>
         </div>
@@ -202,28 +181,7 @@
               </div>
               <span>Income</span>
               <h3 class="card-title text-nowrap mb-1"><?php echo number_format($total_income);?></h3>
-              <?php 
-              if ($current_income >= $previous_income) {
-                $txt_income_label = 'text-success';
-                $txt_income_icon = 'bx bx-up-arrow-alt';
-              }else{
-                $txt_income_label = 'text-danger';  
-                $txt_income_icon = 'bx bx-down-arrow-alt';
-              }
-              if ($previous_income > 0) {
-                $val_previous_income = $previous_income;
-              }else{
-                $val_previous_income = $current_income;
-              }
-              if ($current_income == 0 || $previous_income == 0) {
-                $txt_income_value = 0;
-              }else{
-                $txt_income_value = ($current_income/$val_previous_income)*100;
-              }
               
-              // $txt_income_value = 0;
-              ?>
-              <small class="<?php echo $txt_income_label;?> fw-semibold"><i class="<?php echo $txt_income_icon;?>"></i> <?php echo $txt_income_value;?>%</small>
             </div>
           </div>
         </div>
@@ -469,13 +427,12 @@
         <div class="card-body">
           <ul class="p-0 m-0">
             <!-- start -->
-            <?php
+            <!-- <?php
             $json = json_encode($last_deposit); 
             $json_decoded = json_decode($json); 
             foreach($json_decoded as $row){ ?>
             <li class="d-flex mb-4 pb-1">
               <div class="avatar flex-shrink-0 me-3">
-                <!-- image deposit di click modal -->
                 <img src="<?php echo base_url()?>assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
               </div>
               <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
@@ -489,7 +446,7 @@
                 </div>
               </div>
             </li>
-            <?php }?>
+            <?php }?> -->
             <!-- end -->
 
           </ul>
@@ -520,20 +477,7 @@
       series: [
         {
           name: '<?php echo date('Y');?>',
-          data: [
-          '<?php echo $chart_jan;?>',
-          '<?php echo $chart_feb;?>',
-          '<?php echo $chart_mar;?>',
-          '<?php echo $chart_apr;?>',
-          '<?php echo $chart_may;?>',
-          '<?php echo $chart_jun;?>',
-          '<?php echo $chart_jul;?>',
-          '<?php echo $chart_aug;?>',
-          '<?php echo $chart_sep;?>',
-          '<?php echo $chart_oct;?>',
-          '<?php echo $chart_nov;?>',
-          '<?php echo $chart_dec;?>', 
-          ]
+          data: <?php echo $chart_trx_yearly;?>
         }
       ],
       chart: {
@@ -588,7 +532,7 @@
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        categories: <?php echo $chart_month_yearly;?>,
         labels: {
           style: {
             fontSize: '13px',

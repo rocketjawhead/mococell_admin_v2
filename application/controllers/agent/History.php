@@ -37,11 +37,19 @@ class History extends CI_Controller {
         $data_user = array(
             'data' => $encrypted_string 
         );
+
+        // echo json_encode($data_user);
+        // die();
         
         
-        $url_his_deposit = 'api/transaction/historypaid';
+        $url_his_deposit = 'api/transaction/historytrx';
         $exec_his_deposit = $this->base->post_curl_token($session_userid,$session_id,$url_his_deposit,$data_user);
-        $data['list_history_deposit'] = $exec_his_deposit['Data'];
+        $data['list_history_trx'] = $exec_his_deposit['Data']['list_history_all'];
+        $data['list_history_pending'] = $exec_his_deposit['Data']['list_history_pending'];
+        $data['list_history_refund'] = $exec_his_deposit['Data']['list_history_refund'];
+
+        $data['qty_waiting'] = $exec_his_deposit['Data']['qty_waiting'];
+        $data['qty_refund'] = $exec_his_deposit['Data']['qty_refund'];
 
         $this->load->view('menu/Header',$data);
         $this->load->view('agent/history/Index',$data);
@@ -70,6 +78,9 @@ class History extends CI_Controller {
             'data' => $encrypted_string 
         );
 
+        // echo json_encode($data_user);
+        // die();
+
         $url_checkout_detail = 'api/transaction/checkoutdetail';
         $exec_checkout_detail = $this->base->post_curl_token($session_userid,$session_id,$url_checkout_detail,$data_user);
 
@@ -85,6 +96,12 @@ class History extends CI_Controller {
         // echo json_encode($exec_log_refund['Data']);
         // die();
         $data['list_history_refund'] = $exec_log_refund['Data'];
+
+        //complaint
+        $url_his_deposit = 'api/help/listcomplainttrx';
+        $exec_his_deposit = $this->base->post_curl_token($session_userid,$session_id,$url_his_deposit,$data_user);
+        $data['list_complaint'] = $exec_his_deposit['Data']['log_complaint'];
+        $data['log_refund'] = $exec_his_deposit['Data']['log_refund'];
         //
 
         if ($exec_checkout_detail['responsecode'] == '00') {
@@ -94,29 +111,25 @@ class History extends CI_Controller {
             $data['trx_number'] = $json['trx_number'];
             $data['trx_op'] = $json['trx_op'];
             $data['trx_details'] = $json['trx_details'];
-            $data['trx_total_numb'] = $json['trx_total_numb'];
             $data['trx_price'] = $json['trx_price'];
             $data['trx_fee'] = $json['trx_fee'];
             $data['trx_total'] = $json['trx_total'];
             $data['payment_method'] = $json['payment_method'];
             $data['trx_date'] = $json['trx_date'];
-            $data['create_date'] = $json['create_date'];
-            $data['status'] = $json['status'];
-            $data['upload_receipt'] = $json['upload_receipt'];
             $data['status_payment'] = $json['status_payment'];
-            $data['status_transaction'] = $json['status_transaction'];
-            $data['profit'] = $json['profit'];
-            $data['profit_nominal'] = $json['profit_nominal'];
             $data['status_name'] = $json['status_name'];
-            $data['status_transaction_desc'] = $json['status_transaction_desc'];
+            $data['status_transaction'] = $json['status_transaction'];
+            $data['status_name'] = $json['status_name'];
             $data['is_refund'] = $json['is_refund'];
-            $data['imageurl'] = $json['imageurl'];
             $data['trx_type'] = $json['trx_type'];
+            $data['imageurl'] = $json['imageurl'];
+
+            
 
         }
 
         $this->load->view('menu/Header',$data);
-        $this->load->view('agent/refund/Detail',$data);
+        $this->load->view('agent/history/Detail',$data);
         $this->load->view('menu/Footer',$data);
     }
 

@@ -96,6 +96,9 @@ class Transaction extends CI_Controller {
         $body_user = array(
             'trx_id' => $this->input->post('trx_id'),
             'password' => $this->input->post('password'),
+            'sender_bank' => $this->input->post('sender_bank'),
+            'rcv_bank' => $this->input->post('rcv_bank'),
+            'amount_refund' => $this->input->post('amount_refund'),
             'userid' => $this->session->userdata('session_userid'),
             'secretkey' => $this->secretkey
         );
@@ -106,8 +109,8 @@ class Transaction extends CI_Controller {
             'data' => $encrypted_string 
         );
 
-        // echo json_encode($data_user);
-        // die();
+        echo json_encode($data_user);
+        die();
 
         $url_otp_paid = 'api/transaction/updaterefund/';
         $exec_otp_paid = $this->base->post_curl_token($session_userid,$session_id,$url_otp_paid,$data_user);

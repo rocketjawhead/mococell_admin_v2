@@ -39,6 +39,9 @@ class Dashboard extends CI_Controller {
             'data' => $encrypted_string 
         );
 
+        // echo json_encode($data_profile);
+        // die();
+
         $url_profile = 'api/Report/dashboard';
         $exec_profile = $this->base->post_curl_token($session_userid,$session_id,$url_profile,$data_profile);
         //
@@ -46,42 +49,33 @@ class Dashboard extends CI_Controller {
         // echo json_encode($exec_profile);
         // die();
 
-        $data['total_user'] = $exec_profile['Data']['total_user'];
-        $data['total_deposit_user'] = $exec_profile['Data']['total_deposit_user'];
+        // $data['total_user'] = $exec_profile['Data']['total_user'];
+        // $data['total_deposit_user'] = $exec_profile['Data']['total_deposit_user'];
         $data['total_balance_system'] = $exec_profile['Data']['total_balance_system'];
         $data['total_transaction'] = $exec_profile['Data']['total_transaction'];
+        $data['total_qty'] = $exec_profile['Data']['total_qty'];
 
         //chart
-        $data['chart_jan'] = $exec_profile['Data']['chart_jan'];
-        $data['chart_feb'] = $exec_profile['Data']['chart_feb'];
-        $data['chart_mar'] = $exec_profile['Data']['chart_mar'];
-        $data['chart_apr'] = $exec_profile['Data']['chart_apr'];
-        $data['chart_may'] = $exec_profile['Data']['chart_may'];
-        $data['chart_jun'] = $exec_profile['Data']['chart_jun'];
-        $data['chart_jul'] = $exec_profile['Data']['chart_jul'];
-        $data['chart_aug'] = $exec_profile['Data']['chart_aug'];
-        $data['chart_sep'] = $exec_profile['Data']['chart_sep'];
-        $data['chart_oct'] = $exec_profile['Data']['chart_oct'];
-        $data['chart_nov'] = $exec_profile['Data']['chart_nov'];
-        $data['chart_dec'] = $exec_profile['Data']['chart_dec'];
+        $data['chart_month_yearly'] = json_encode($exec_profile['Data']['chart_month_yearly']);
+        $data['chart_trx_yearly'] = json_encode($exec_profile['Data']['chart_trx_yearly']);
 
         $data['total_trx_previous'] = $exec_profile['Data']['total_trx_previous'];
         $data['total_trx_current'] = $exec_profile['Data']['total_trx_current'];
         $data['total_sales_year'] = $exec_profile['Data']['total_sales_year'];
         $data['total_sales_current'] = $exec_profile['Data']['total_sales_current'];
 
-        $data['last_deposit'] = $exec_profile['Data']['last_deposit'];
+        // $data['last_deposit'] = $exec_profile['Data']['last_deposit'];
         $data['last_transaction'] = $exec_profile['Data']['last_transaction'];
         $data['percent_growth'] = $exec_profile['Data']['percent_growth'];
         $data['total_income'] = $exec_profile['Data']['total_income'];
 
         //card graphy
 
-        $data['previous_usr'] = $exec_profile['Data']['previous_usr'];
-        $data['current_usr'] = $exec_profile['Data']['current_usr'];
+        // $data['previous_usr'] = $exec_profile['Data']['previous_usr'];
+        // $data['current_usr'] = $exec_profile['Data']['current_usr'];
 
-        $data['previous_depo'] = $exec_profile['Data']['previous_depo'];
-        $data['current_depo'] = $exec_profile['Data']['current_depo'];
+        // $data['previous_depo'] = $exec_profile['Data']['previous_depo'];
+        // $data['current_depo'] = $exec_profile['Data']['current_depo'];
 
         $data['previous_income'] = $exec_profile['Data']['previous_income'];
         $data['current_income'] = $exec_profile['Data']['current_income'];

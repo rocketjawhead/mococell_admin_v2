@@ -38,8 +38,11 @@ class Help extends CI_Controller {
             'data' => $encrypted_string 
         );
         
+        
         $url_his_deposit = 'api/help/listcomplaint';
         $exec_his_deposit = $this->base->post_curl_token($session_userid,$session_id,$url_his_deposit,$data_user);
+
+
         $data['list_complaint'] = $exec_his_deposit['Data'];
 
         $this->load->view('menu/Header',$data);

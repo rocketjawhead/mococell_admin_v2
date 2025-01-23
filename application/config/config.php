@@ -24,8 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //PRODUCTION
-$config['base_url'] = 'http://localhost/mococell_admmin/';
-$config['service_url'] = 'http://localhost/mococell_admmin_api/';
+$config['base_url'] = 'http://localhost/mococell_admin/';
+$config['service_url'] = 'http://localhost/mococell_admin_api/';
 
 //PRODUCTION
 // $config['base_url'] = 'https://sweethouse.mococell.com/';

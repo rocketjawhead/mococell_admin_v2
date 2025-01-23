@@ -26,7 +26,7 @@
         </thead>
         <tbody class="table-border-bottom-0">
         <?php
-        $json = json_encode($list_history_deposit); 
+        $json = json_encode($list_complaint); 
         $json_decoded = json_decode($json); 
         foreach($json_decoded as $row){ ?>
           <tr>
