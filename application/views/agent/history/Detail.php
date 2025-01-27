@@ -10,7 +10,11 @@
 
 <div class="col-md-12 col-xl-12">
 <div class="card mb-3">
+
   <div class="card-body">
+    <?php echo '#'.$this->uri->segment(4);?>
+    <button class="btn btn-success btn-sm btn-block" onClick="exec_trx();">Execution Transaction</button>
+    <button class="btn btn-primary btn-sm btn-block" onClick="check_status();">Check Status</button>
     <div style="padding: 10px;">
               <table class="table table-bordered" id="" width="100%" cellspacing="0">
                 <thead>
@@ -65,9 +69,75 @@
                     <td><?php echo $trx_date;?></td>
                   </tr>
                   <tr>
-                    <td><b>Payment Status</b></td>
+                    <td><b>Status Payment</b></td>
+                    <td><?php echo strtoupper($status_payment);?></td>
+                  </tr>
+                  <tr>
+                    <td><b>Status Transaction</b></td>
                     <td><?php echo $status_name;?></td>
                   </tr>
+
+                  <?php 
+                  if($upload_receipt == 1 && $id_payment_method == '2'){?>  
+
+                  <tr>
+                    <td><b>Detail Transfer</b></td>
+                    <td>
+                      <table class="table table-bordered" id="" width="100%" cellspacing="0" style="margin-top: 10px;">
+                        <tr>
+                          <th>Item</th>
+                          <th>Value</th>
+                        </tr>
+                        <tr>
+                          <td>Proof Transfer</td>
+                          <td><img src="<?php echo $trf_img;?>" height="400px" width="200px"></td>
+                        </tr>
+                        <tr>
+                          <td>Sender Bank</td>
+                          <td><?php echo $name_bank;?></td>
+                        </tr>
+                        <tr>
+                          <td>Name Bank</td>
+                          <td><?php echo '['.$code_bank.'] '.$name_bank;?></td>
+                        </tr>
+                        <tr>
+                          <td>Sender Name</td>
+                          <td><?php echo $sender_name;?></td>
+                        </tr>
+                        <tr>
+                          <td>Receiver Bank</td>
+                          <td><?php echo $rcv_bank;?></td>
+                        </tr>
+                        <?php if ($status_payment == 'unpaid' && $upload_receipt == '1') {?>
+                        <tr>
+                          <td>
+                            Action
+                          </td>
+                          <td>
+                            <marquee>Pastikan bukti transfer sesuai dengan transaksi yang masuk ke m-banking anda. Pastikan nominal dan sender name sesuai</marquee>
+                            
+                              <div class="form-group" style="padding: 10px;">
+                                <label>OTP Code</label>
+                                <button id="generate_otp" class="btn btn-info btn-sm" onClick="request_otp();">OTP</button>
+                                <input type="number" class="form-control" name="otp" id="otp" maxlength="4">
+                                <br/>
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="password" id="password">
+                                <br/>
+                                <button class="btn btn-primary btn-sm btn-block" onClick="confirm_paid();">Confirm</button>
+                              </div>
+                            
+                          </td>
+                        </tr>
+                        <?php }?>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <?php }?>
+
+
+
 
                   <?php 
 
@@ -297,6 +367,182 @@
               
             }
       </script>
+      <script type="text/javascript">
+    function request_otp(){
+            var id = '<?php echo $trx_id;?>';
+            // alert(id);
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: "<?php echo base_url();?>Auth/get_csrf", 
+                success: function (data) {
+                  var csrf_token = data.csrf_token;
+                  var csrf_name = '<?php echo $csrf_name;?>';
+                  // alert(csrf_token);
+
+                  //start
+                  $.ajax({
+                    url : "<?php echo base_url();?>agent/Transaction/otp_paid",
+                    method : "POST",
+                    data : {
+                      trx_id: id,
+                      [csrf_name] : csrf_token,
+                    },
+                    async : false,
+                    dataType : 'json',
+                    success: function(data){
+                      var status = data.status;
+                      console.log(JSON.stringify(data));
+                      if (status == 'Success') {
+                        alert(data.message);
+                        location.reload();
+                      }else{
+                        alert(data.message);
+                        location.reload();
+                      }
+                    }
+                  });
+                  //end
+                }
+            });
+    }
+
+
+    //
+    function confirm_paid(){
+
+      var val_otp = $('#otp').val();
+      var val_password = $('#password').val();
+
+      //start
+      $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: "<?php echo base_url();?>Auth/get_csrf", 
+          success: function (data) {
+            var csrf_token = data.csrf_token;
+            var csrf_name = '<?php echo $csrf_name;?>';
+            // alert(csrf_token);
+
+            //start
+            $.ajax({
+              url : "<?php echo base_url();?>agent/Transaction/confirm_paid",
+              method : "POST",
+              data : {
+                trx_id: '<?php echo $trx_id;?>',
+                otp : val_otp,
+                password : val_password,
+                [csrf_name] : csrf_token,
+
+              },
+              async : false,
+              dataType : 'json',
+              success: function(data){
+                var status = data.status;
+                console.log(JSON.stringify(data));
+                if (status == 'Success') {
+                  alert(data.message);
+                  location.reload();
+                }else{
+                  alert(data.message);
+                  location.reload();
+                }
+              }
+            });
+            //end
+          }
+      });
+      //end
+
+      
+    }
+
+    function exec_trx(){
+      console.log('hit exec');
+      //start
+      $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: "<?php echo base_url();?>Auth/get_csrf", 
+          success: function (data) {
+            var csrf_token = data.csrf_token;
+            var csrf_name = '<?php echo $csrf_name;?>';
+            // alert(csrf_token);
+            console.log('hit -> '+csrf_token);
+            //start
+            $.ajax({
+              url : "<?php echo base_url();?>agent/Transaction/dir_exec_trx",
+              method : "POST",
+              data : {
+                trx_id: '<?php echo $trx_id;?>',
+                [csrf_name] : csrf_token,
+
+              },
+              async : false,
+              dataType : 'json',
+              success: function(data){
+                // var status = data.status;
+                console.log(JSON.stringify(data));
+                // if (status == 'Success') {
+                  alert(JSON.stringify(data));
+                  location.reload();
+                // }else{
+                //   alert(data.message);
+                //   location.reload();
+                // }
+              }
+            });
+            //end
+          }
+      });
+      //end
+
+      
+    }
+
+    function check_status(){
+      console.log('hit');
+      //start
+      $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: "<?php echo base_url();?>Auth/get_csrf", 
+          success: function (data) {
+            var csrf_token = data.csrf_token;
+            var csrf_name = '<?php echo $csrf_name;?>';
+            // alert(csrf_token);
+            console.log('hit -> '+csrf_token);
+            //start
+            $.ajax({
+              url : "<?php echo base_url();?>agent/Transaction/dir_check_status",
+              method : "POST",
+              data : {
+                trx_id: '<?php echo $trx_id;?>',
+                [csrf_name] : csrf_token,
+
+              },
+              async : false,
+              dataType : 'json',
+              success: function(data){
+                // var status = data.status;
+                console.log(JSON.stringify(data));
+                // if (status == 'Success') {
+                  alert(JSON.stringify(data));
+                  location.reload();
+                // }else{
+                //   alert(data.message);
+                //   location.reload();
+                // }
+              }
+            });
+            //end
+          }
+      });
+      //end
+
+      
+    }
+    </script>
 
     </div>
 

@@ -5,13 +5,15 @@ class M_base extends CI_Model {
       {
               parent::__construct();
               $this->service_url = $this->config->item("service_url");
+              $this->service_url_mobile = $this->config->item("service_url_mobile");
+
               $this->secretkey = $this->config->item('secretkey');
               $this->random_code = rand(100000,999999);
       }
      
 
       //CURL PHP
-      function post_curl($url,$data){
+    function post_curl($url,$data){
 
             $random_code = $this->random_code;
             $content = json_encode($data);
@@ -213,6 +215,43 @@ class M_base extends CI_Model {
       $url = 'api/settings/mainmenu';
       $get_menu = $this->post_curl_token($session_userid,$session_id,$url,$data_req);
       return json_encode($get_menu['Data']);
+    }
+
+    function post_curl_direct($url,$data){
+
+            $random_code = $this->random_code;
+            $content = json_encode($data);
+
+            $service_url = $this->service_url_mobile.$url;
+
+            // echo $service_url;
+            date_default_timezone_set('Asia/Jakarta');
+
+            $start_curl_post = date('Y-m-d h:i:s');
+
+            $curl = curl_init($service_url);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST"); 
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HTTPHEADER,array("Content-type: application/json",'Content-Length: ' . strlen($content)));
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 15);//10 detik timedelay simulator
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+            //log_activity
+            $this->post_curl_activity($url,$data,$random_code);
+            //log activity
+
+            $response = curl_exec($curl);
+            $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);    
+            //log_activity
+            $this->post_curl_activity($url,json_decode($response),$random_code);
+            //log activity
+            curl_close($curl);
+            return $response = json_decode($response,true);
     }
 
   //   function create_captcha(){

@@ -139,9 +139,58 @@ class Transaction extends CI_Controller {
             'data' => $encrypted_string 
         );
 
-
         $url = 'api/transaction/checkstatus/';
         $exec = $this->base->post_curl_token($session_userid,$session_id,$url,$data);
+        echo json_encode($exec);
+    }
+
+    public function dir_exec_trx(){
+        $data['session_userid'] = $this->session->userdata('session_userid');
+        $data['session_id'] = $this->session->userdata('session_id');
+        $session_userid = $this->session->userdata('session_userid'); 
+        $session_id = $this->session->userdata('session_id');
+        $body_user = array(
+            'trx_id' => $this->input->post('trx_id'),
+            'type' => 'api check status',
+            'secretkey' => $this->secretkey
+        );
+
+        $encrypted_string = $this->encrypt->encode(json_encode($body_user));
+        $data = array(
+            'data' => $encrypted_string 
+        );
+
+        // echo json_encode($data);
+        // die();
+
+
+        $url = 'api/load/checktrx/';
+        $exec = $this->base->post_curl_direct($url,$body_user);
+        echo json_encode($exec);
+    }
+
+    public function dir_check_status(){
+        $data['session_userid'] = $this->session->userdata('session_userid');
+        $data['session_id'] = $this->session->userdata('session_id');
+        $session_userid = $this->session->userdata('session_userid'); 
+        $session_id = $this->session->userdata('session_id');
+        $body_user = array(
+            'trx_id' => $this->input->post('trx_id'),
+            'type' => 'api check status',
+            'secretkey' => $this->secretkey
+        );
+
+        $encrypted_string = $this->encrypt->encode(json_encode($body_user));
+        $data = array(
+            'data' => $encrypted_string 
+        );
+
+        // echo json_encode($data);
+        // die();
+
+
+        $url = 'api/load/checkstatus/';
+        $exec = $this->base->post_curl_direct($url,$body_user);
         echo json_encode($exec);
     }
         

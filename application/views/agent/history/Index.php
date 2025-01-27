@@ -34,7 +34,7 @@
                 <i class="tf-icons bx bx-sync"></i> Pending 
 
                 <?php if ($qty_waiting > 0){?>
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-primary">3</span>
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-primary"><?php echo $qty_waiting;?></span>
                 <?php }?>
 
 

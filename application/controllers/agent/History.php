@@ -114,6 +114,7 @@ class History extends CI_Controller {
             $data['trx_price'] = $json['trx_price'];
             $data['trx_fee'] = $json['trx_fee'];
             $data['trx_total'] = $json['trx_total'];
+            $data['id_payment_method'] = $json['id_payment_method'];
             $data['payment_method'] = $json['payment_method'];
             $data['trx_date'] = $json['trx_date'];
             $data['status_payment'] = $json['status_payment'];
@@ -123,8 +124,13 @@ class History extends CI_Controller {
             $data['is_refund'] = $json['is_refund'];
             $data['trx_type'] = $json['trx_type'];
             $data['imageurl'] = $json['imageurl'];
-
-            
+            $data['upload_receipt'] = $json['upload_receipt'];
+            $data['trf_img'] = $json['trf_img'];
+            $data['sender_bank'] = $json['sender_bank'];
+            $data['name_bank'] = $json['name_bank'];
+            $data['code_bank'] = $json['code_bank'];
+            $data['sender_name'] = $json['sender_name'];
+            $data['rcv_bank'] = $json['rcv_bank'];            
 
         }
 

@@ -143,6 +143,20 @@
               </a>
             </li>
 
+            <li class="menu-item <?php if($this->uri->segment(2) == 'Help' || $this->uri->segment(2) == 'help'){ echo 'active';}else{echo '';}?>">
+              <a href="<?php echo base_url('agent/Help/complaint');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Complaint</div>
+              </a>
+            </li>
+
+            <li class="menu-item <?php if($this->uri->segment(2) == 'Blog' || $this->uri->segment(2) == 'blog'){ echo 'active';}else{echo '';}?>">
+              <a href="<?php echo base_url('agent/Blog/');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Blog</div>
+              </a>
+            </li>
+
             <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Deposit' || $this->uri->segment(2) == 'deposit'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Deposit/');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
@@ -164,12 +178,7 @@
               </a>
             </li> -->
 
-            <li class="menu-item <?php if($this->uri->segment(2) == 'Help' || $this->uri->segment(2) == 'help'){ echo 'active';}else{echo '';}?>">
-              <a href="<?php echo base_url('agent/Help/complaint');?>" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Complaint</div>
-              </a>
-            </li>
+            
 
             <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Bank' || $this->uri->segment(2) == 'bank'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Help/bank');?>" class="menu-link">
