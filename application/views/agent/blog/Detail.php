@@ -43,6 +43,7 @@
                           <option value="1">Blog</option>
                           <option value="2">Event</option>
                           <option value="3">Promo</option>
+                          <option value="4">Adsense</option>
                         </select>
                       </div> 
                     </td>
