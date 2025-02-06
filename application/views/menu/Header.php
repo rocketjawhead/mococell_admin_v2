@@ -157,12 +157,12 @@
               </a>
             </li>
 
-            <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Deposit' || $this->uri->segment(2) == 'deposit'){ echo 'active';}else{echo '';}?>">
+            <li class="menu-item <?php if($this->uri->segment(2) == 'Deposit' || $this->uri->segment(2) == 'deposit'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Deposit/');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Deposit</div>
               </a>
-            </li> -->
+            </li>
 
             <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Refund' || $this->uri->segment(2) == 'refund'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Refund/');?>" class="menu-link">
