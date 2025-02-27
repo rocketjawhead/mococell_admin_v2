@@ -161,15 +161,15 @@
                       async : false,
                       dataType : 'json',
                       success: function(data){
-                        var status = data.status;
-                        // console.log(JSON.stringify(data));
-                        if (status == 'Success') {
-                          alert(data.message);
-                          location.reload();
-                        }else{
-                          alert(data.message);
-                          location.reload();
-                        }
+                        // var status = data.status;
+                        console.log(JSON.stringify(data));
+                        // if (status == 'Success') {
+                        //   alert(data.message);
+                        //   location.reload();
+                        // }else{
+                        //   alert(data.message);
+                        //   location.reload();
+                        // }
                       }
                     });
                     //end

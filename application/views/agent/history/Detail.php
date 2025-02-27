@@ -93,20 +93,12 @@
                           <td><img src="<?php echo $trf_img;?>" height="400px" width="200px"></td>
                         </tr>
                         <tr>
-                          <td>Sender Bank</td>
-                          <td><?php echo $name_bank;?></td>
-                        </tr>
-                        <tr>
-                          <td>Name Bank</td>
-                          <td><?php echo '['.$code_bank.'] '.$name_bank;?></td>
-                        </tr>
-                        <tr>
-                          <td>Sender Name</td>
-                          <td><?php echo $sender_name;?></td>
-                        </tr>
-                        <tr>
-                          <td>Receiver Bank</td>
+                          <td>Receive Bank</td>
                           <td><?php echo $rcv_bank;?></td>
+                        </tr>
+                        <tr>
+                          <td>Sender Bank</td>
+                          <td><?php echo $sender_bank;?></td>
                         </tr>
                         <?php if ($status_payment == 'unpaid' && $upload_receipt == '1') {?>
                         <tr>

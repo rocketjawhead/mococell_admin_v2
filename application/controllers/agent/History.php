@@ -127,9 +127,6 @@ class History extends CI_Controller {
             $data['upload_receipt'] = $json['upload_receipt'];
             $data['trf_img'] = $json['trf_img'];
             $data['sender_bank'] = $json['sender_bank'];
-            $data['name_bank'] = $json['name_bank'];
-            $data['code_bank'] = $json['code_bank'];
-            $data['sender_name'] = $json['sender_name'];
             $data['rcv_bank'] = $json['rcv_bank'];            
 
         }

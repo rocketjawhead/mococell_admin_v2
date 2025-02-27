@@ -112,8 +112,8 @@ class Transaction extends CI_Controller {
             'data' => $encrypted_string 
         );
 
-        echo json_encode($data_user);
-        die();
+        // echo json_encode($data_user);
+        // die();
 
         $url_otp_paid = 'api/transaction/updaterefund/';
         $exec_otp_paid = $this->base->post_curl_token($session_userid,$session_id,$url_otp_paid,$data_user);
