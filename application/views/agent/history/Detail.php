@@ -13,7 +13,7 @@
 
   <div class="card-body">
     <?php echo '#'.$this->uri->segment(4);?>
-    <button class="btn btn-success btn-sm btn-block" onClick="exec_trx();">Execution Transaction</button>
+    <!-- <button class="btn btn-success btn-sm btn-block" onClick="exec_trx();">Execution Transaction</button> -->
     <button class="btn btn-primary btn-sm btn-block" onClick="check_status();">Check Status</button>
     <div style="padding: 10px;">
               <table class="table table-bordered" id="" width="100%" cellspacing="0">

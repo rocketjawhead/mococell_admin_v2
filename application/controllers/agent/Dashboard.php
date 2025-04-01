@@ -94,6 +94,8 @@ class Dashboard extends CI_Controller {
 
         $data['list_bank'] = $exec_profile['Data']['list_bank'];
 
+        $data['total_visitor'] = $exec_profile['Data']['total_visitor'];
+
         $this->load->view('menu/Header',$data);
         $this->load->view('agent/Dashboard',$data);
         $this->load->view('menu/Footer',$data);

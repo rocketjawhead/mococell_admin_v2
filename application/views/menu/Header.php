@@ -164,6 +164,13 @@
               </a>
             </li>
 
+            <li class="menu-item <?php if($this->uri->segment(2) == 'Report' || $this->uri->segment(2) == 'report'){ echo 'active';}else{echo '';}?>">
+              <a href="<?php echo base_url('agent/Report/');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Report</div>
+              </a>
+            </li>
+
             <!-- <li class="menu-item <?php if($this->uri->segment(2) == 'Refund' || $this->uri->segment(2) == 'refund'){ echo 'active';}else{echo '';}?>">
               <a href="<?php echo base_url('agent/Refund/');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>

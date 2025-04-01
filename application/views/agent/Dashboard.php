@@ -162,7 +162,7 @@
                 </div>
               </div>
               <span>Visitor</span>
-              <h3 class="card-title text-nowrap mb-1"><?php echo number_format($total_balance_system);?></h3>
+              <h3 class="card-title text-nowrap mb-1"><?php echo number_format($total_visitor);?></h3>
               
             </div>
           </div>
