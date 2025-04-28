@@ -36,6 +36,7 @@
 <div class="card mb-3">
   <div class="card-body">
     <div style="padding: 10px;">
+      <button class="btn btn-success btn-sm btn-block" onClick="exec_trx();">Execution Transaction</button><hr/>
               <table class="table table-bordered" id="" width="100%" cellspacing="0">
                 <thead>
                   <tr>
@@ -190,6 +191,50 @@
                   alert(data.message);
                   location.reload();
                 }
+              }
+            });
+            //end
+          }
+      });
+      //end
+
+      
+    }
+</script>
+<script type="text/javascript">
+  function exec_trx(){
+      console.log('hit exec');
+      //start
+      $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: "<?php echo base_url();?>Auth/get_csrf", 
+          success: function (data) {
+            var csrf_token = data.csrf_token;
+            var csrf_name = '<?php echo $csrf_name;?>';
+            // alert(csrf_token);
+            console.log('hit -> '+csrf_token);
+            //start
+            $.ajax({
+              url : "<?php echo base_url();?>agent/Transaction/dir_exec_trx",
+              method : "POST",
+              data : {
+                trx_id: '<?php echo $trx_id;?>',
+                [csrf_name] : csrf_token,
+
+              },
+              async : false,
+              dataType : 'json',
+              success: function(data){
+                // var status = data.status;
+                console.log(JSON.stringify(data));
+                // if (status == 'Success') {
+                  alert(JSON.stringify(data));
+                  location.reload();
+                // }else{
+                //   alert(data.message);
+                //   location.reload();
+                // }
               }
             });
             //end
