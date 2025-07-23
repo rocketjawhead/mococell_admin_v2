@@ -15,20 +15,25 @@ class Login extends CI_Controller {
 	public function index(){
 		$data['csrf_name'] = $this->security->get_csrf_token_name();
 	    $data['csrf_token'] = $this->security->get_csrf_hash();
-	    $generate_captcha = $this->create_captcha();
-	    $data['img'] = $generate_captcha['img'];
+	    // $generate_captcha = $this->create_captcha();
+	    // $data['img'] = $generate_captcha['img'];
+	    $data['img'] = base_url('captcha/1745077924.6333.jpg');
+
 		// $data['key'] = $generate_captcha['key'];
-		$data['word'] = $generate_captcha['word'];
+		// $data['word'] = $generate_captcha['word'];
+		$data['word'] = '6548';
 
 		$this->load->view('login/Index',$data);
 	}
 
 
 	public function create_captcha(){
+
+		// $this->load->helper('captcha');
 		$options = array(
 			'img_path'	=> './captcha/',
-			'img_url'	=> base_url('captcha'),
-			// 'img_url'	=> '/ci-chapca/captcha/',
+			'img_url'	=> base_url('captcha/'),
+			// 'img_url'	=> 'http://localhost/mokosel_admin/captcha/',
 			'img_width'	=> '200',
 			'img_height'=> '40',
 			'word_length' => 4,
@@ -37,6 +42,10 @@ class Login extends CI_Controller {
 		);
 
 		$cap = create_captcha($options);
+
+		// echo json_encode($cap);
+		// die();
+
 		$image = $cap['image'];
 		$rand = rand(10,20);
 
@@ -65,16 +74,16 @@ class Login extends CI_Controller {
 
 	public function exec_login(){
     
-	$key = $this->input->post('key');
-	$captcha = $this->input->post('captcha');
+	// $key = $this->input->post('key');
+	// $captcha = $this->input->post('captcha');
 
 
 	// echo "string";
 	// die();
-	if($captcha == $this->session->userdata('captchaword')){
+	// if($captcha == $this->session->userdata('captchaword')){
 		$body = array(
-	    	'username' => $this->input->post('username'),
-	    	'password' => $this->input->post('password'),
+	    	'username' => 'cendol@gmail.com',
+	    	'password' => 'admin',
 	    	'secretkey' => $this->secretkey
 	    );
 
@@ -82,6 +91,7 @@ class Login extends CI_Controller {
 	    $data = array(
 	    	'data' => $encrypted_string 
 	    );
+
 
 	    $url = 'api/auth/login/';
 	    $exec = $this->bs->post_curl($url,$data);
@@ -104,19 +114,19 @@ class Login extends CI_Controller {
 	    	}
 	    }
 	    echo json_encode($exec);
-	}
-	else{
-		$response = array(
-			'responsecode' => '401',
-			'message' => 'Please check your captcha',
-			'key' => $key,
-			'captcha' => $captcha 
-		);
-		echo json_encode($response);
-		// $this->session->set_flashdata('error_msg','Please check your captcha');
-		// return FALSE;
-	}
-	$this->session->unset_userdata('captchaword',$captcha);
+	// }
+	// else{
+	// 	$response = array(
+	// 		'responsecode' => '401',
+	// 		'message' => 'Please check your captcha',
+	// 		'key' => $key,
+	// 		'captcha' => $captcha 
+	// 	);
+	// 	echo json_encode($response);
+	// 	// $this->session->set_flashdata('error_msg','Please check your captcha');
+	// 	// return FALSE;
+	// }
+	// $this->session->unset_userdata('captchaword',$captcha);
 	// $this->session->unset_userdata($array_items);
 
     

@@ -33,9 +33,8 @@
               >
                 <i class="tf-icons bx bx-sync"></i> Pending 
 
-                <?php if ($qty_waiting > 0){?>
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-primary"><?php echo $qty_waiting;?></span>
-                <?php }?>
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-primary total_pending" id="total_pending"></span>
+                
 
 
               </button>
@@ -51,10 +50,7 @@
                 aria-selected="false"
               >
                 <i class="tf-icons bx bx-message-error"></i> Refund 
-
-                <?php if ($qty_refund > 0){?>
-                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger"><?php echo $qty_refund;?></span>
-                <?php }?>
+                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger total_refund" id="total_refund"></span>
               </button>
             </li>
           </ul>
@@ -72,27 +68,8 @@
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
-                <?php
-                $json = json_encode($list_history_trx); 
-                $json_decoded = json_decode($json); 
-                foreach($json_decoded as $row){ ?>
-                  <tr>
-                    <td>
-                      <a href="<?php echo base_url('agent/History/detail')?>/<?php echo $row->trx_id;?>">
-                        <strong>#<?php echo $row->trx_id;?></strong>
-                        <br/>
-                        <?php echo $row->trx_date;?>
-                      </a>
-                    </td>
-                    <td>[<?php echo $row->trx_op;?>] <?php echo $row->trx_number;?></td>
-                    <td><?php echo $row->trx_code;?></td>
-                    <td><?php echo 'Rp '.number_format($row->trx_price);?></td>
-                    <td><?php echo 'Rp '.number_format($row->trx_total);?></td>
-                    <td><?php echo $row->payment_method;?></td>
-                    <td><span class="<?php echo $row->status_badges;?>"><?php echo $row->status_name;?></span></td>
-                  </tr>
-                <?php }?>
+                <tbody class="table-border-bottom-0 list_history_all" id="list_history_all">
+                  
                 </tbody>
               </table>
             </div>
@@ -109,27 +86,7 @@
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
-                <?php
-                $json = json_encode($list_history_pending); 
-                $json_decoded = json_decode($json); 
-                foreach($json_decoded as $row){ ?>
-                  <tr>
-                    <td>
-                      <a href="<?php echo base_url('agent/History/detail')?>/<?php echo $row->trx_id;?>">
-                        <strong>#<?php echo $row->trx_id;?></strong>
-                        <br/>
-                        <?php echo $row->trx_date;?>
-                      </a>
-                    </td>
-                    <td>[<?php echo $row->trx_op;?>] <?php echo $row->trx_number;?></td>
-                    <td><?php echo $row->trx_code;?></td>
-                    <td><?php echo 'Rp '.number_format($row->trx_price);?></td>
-                    <td><?php echo 'Rp '.number_format($row->trx_total);?></td>
-                    <td><?php echo $row->payment_method;?></td>
-                    <td><span class="<?php echo $row->status_badges;?>"><?php echo $row->status_name;?></span></td>
-                  </tr>
-                <?php }?>
+                <tbody class="table-border-bottom-0 list_history_pending" id="list_history_pending">
                 </tbody>
               </table>
             </div>
@@ -146,27 +103,8 @@
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
-                <?php
-                $json = json_encode($list_history_refund); 
-                $json_decoded = json_decode($json); 
-                foreach($json_decoded as $row){ ?>
-                  <tr>
-                    <td>
-                      <a href="<?php echo base_url('agent/History/detail')?>/<?php echo $row->trx_id;?>">
-                        <strong>#<?php echo $row->trx_id;?></strong>
-                        <br/>
-                        <?php echo $row->trx_date;?>
-                      </a>
-                    </td>
-                    <td>[<?php echo $row->trx_op;?>] <?php echo $row->trx_number;?></td>
-                    <td><?php echo $row->trx_code;?></td>
-                    <td><?php echo 'Rp '.number_format($row->trx_price);?></td>
-                    <td><?php echo 'Rp '.number_format($row->trx_total);?></td>
-                    <td><?php echo $row->payment_method;?></td>
-                    <td><span class="<?php echo $row->status_badges;?>"><?php echo $row->status_name;?></span></td>
-                  </tr>
-                <?php }?>
+                <tbody class="table-border-bottom-0 list_history_refund" id="list_history_refund">
+                
                 </tbody>
               </table>
             </div>
@@ -177,6 +115,116 @@
     <!-- Tabs -->
   </div>
   <!-- / Content -->
+<script src="<?php echo base_url()?>assets/vendor/libs/jquery/jquery.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "<?php echo base_url();?>Auth/get_csrf", 
+            success: function (data) {
+                // console.log('asd');
+                var csrf_token = data.csrf_token;
+                var csrf_name = '<?php echo $csrf_name;?>';
+                //submit req
+                $.ajax({
+                  url : "<?php echo base_url();?>agent/history/viewdata_dashboard/",
+                  method : "POST",
+                  data : {
+                    [csrf_name] : csrf_token,
+                  },
+                  async : false,
+                  dataType : 'json',
+                  success: function(data){
+                    var response = data;
+                    var response_list_history_all = data.Data.list_history_all;
+                    
+                    var response_list_history_pending = data.Data.list_history_pending;
+                    var total_pending = response.Data.list_history_pending.length;
+                    $('#total_pending').text(total_pending);
+
+                    var response_list_history_refund = data.Data.list_history_refund;
+                    var total_refund = response.Data.list_history_refund.length;
+                    $('#total_refund').text(total_refund);
+
+                    var qty_waiting = response.Data.qty_waiting;
+                    var qty_refund = response.Data.qty_refund;
+
+
+
+                    
+                    console.log('post response_list_history_pending '+JSON.stringify(response_list_history_pending));
+
+                    //start
+                    response_list_history_all.forEach(item => {
+                        $('#list_history_all').append(`
+                          <tr>
+                          <td>
+                            <a href="<?php echo base_url('agent/History/detail')?>/${item.trx_id}">
+                              <strong>#${item.trx_id}</strong>
+                              <br/>
+                              ${item.trx_date}
+                            </a>
+                          </td>
+                          <td>[${item.trx_op}] ${item.trx_number}</td>
+                          <td>${item.trx_code}</td>
+                          <td>${item.trx_price}</td>
+                          <td>${item.trx_total}</td>
+                          <td>${item.payment_method}</td>
+                          <td><span class="${item.status_badges}">${item.status_name}</span></td>
+                        </tr>`);
+                    });
+                    //end
+                    //start
+                    response_list_history_pending.forEach(item => {
+                        $('#list_history_pending').append(`
+                          <tr>
+                          <td>
+                            <a href="<?php echo base_url('agent/History/detail')?>/${item.trx_id}">
+                              <strong>#${item.trx_id}</strong>
+                              <br/>
+                              ${item.trx_date}
+                            </a>
+                          </td>
+                          <td>[${item.trx_op}] ${item.trx_number}</td>
+                          <td>${item.trx_code}</td>
+                          <td>${item.trx_price}</td>
+                          <td>${item.trx_total}</td>
+                          <td>${item.payment_method}</td>
+                          <td><span class="${item.status_badges}">${item.status_name}</span></td>
+                        </tr>`);
+                    });
+                    //end
+                    //start
+                    response_list_history_refund.forEach(item => {
+                        $('#list_history_refund').append(`
+                          <tr>
+                          <td>
+                            <a href="<?php echo base_url('agent/History/detail')?>/${item.trx_id}">
+                              <strong>#${item.trx_id}</strong>
+                              <br/>
+                              ${item.trx_date}
+                            </a>
+                          </td>
+                          <td>[${item.trx_op}] ${item.trx_number}</td>
+                          <td>${item.trx_code}</td>
+                          <td>${item.trx_price}</td>
+                          <td>${item.trx_total}</td>
+                          <td>${item.payment_method}</td>
+                          <td><span class="${item.status_badges}">${item.status_name}</span></td>
+                        </tr>`);
+                    });
+                    //end
+
+
+                  }
+                });
+                //end submit
+            }
+        });
+});
+</script>
 
 
 

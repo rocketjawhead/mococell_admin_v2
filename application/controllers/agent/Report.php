@@ -38,8 +38,8 @@ class Report extends CI_Controller {
             'data' => $encrypted_string 
         );
 
-        // echo json_encode($data_user);
-        // die();
+        echo json_encode($data_user);
+        die();
         
         
         $url_his_deposit = 'api/report/reportgl';

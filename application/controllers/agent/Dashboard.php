@@ -28,6 +28,28 @@ class Dashboard extends CI_Controller {
         $session_userid = $this->session->userdata('session_userid'); 
         $session_id = $this->session->userdata('session_id');
 
+        $data['csrf_name'] = $this->security->get_csrf_token_name();
+        $data['csrf_token'] = $this->security->get_csrf_hash();
+
+        $data['main_menu'] = $this->base->main_menu();  
+
+
+        $this->load->view('menu/Header',$data);
+        $this->load->view('agent/Dashboard',$data);
+        $this->load->view('menu/Footer',$data);
+    }
+    
+    public function viewdata_dashboard()
+    {
+
+        $data['csrf_name'] = $this->security->get_csrf_token_name();
+        $data['csrf_token'] = $this->security->get_csrf_hash();
+
+        $data['session_userid'] = $this->session->userdata('session_userid');
+        $data['session_id'] = $this->session->userdata('session_id');
+        $session_userid = $this->session->userdata('session_userid'); 
+        $session_id = $this->session->userdata('session_id');
+
         $data['main_menu'] = $this->base->main_menu();  
         $body_profile = array(
             'userid' => $this->session->userdata('session_userid'),
@@ -38,67 +60,11 @@ class Dashboard extends CI_Controller {
         $data_profile = array(
             'data' => $encrypted_string 
         );
-
-        // echo json_encode($data_profile);
-        // die();
-
+        
         $url_profile = 'api/Report/dashboard';
         $exec_profile = $this->base->post_curl_token($session_userid,$session_id,$url_profile,$data_profile);
-        //
 
-        // echo json_encode($exec_profile);
-        // die();
-
-        // $data['total_user'] = $exec_profile['Data']['total_user'];
-        // $data['total_deposit_user'] = $exec_profile['Data']['total_deposit_user'];
-        $data['total_balance_system'] = $exec_profile['Data']['total_balance_system'];
-        $data['total_transaction'] = $exec_profile['Data']['total_transaction'];
-        $data['total_qty'] = $exec_profile['Data']['total_qty'];
-
-        //chart
-        $data['chart_month_yearly'] = json_encode($exec_profile['Data']['chart_month_yearly']);
-        $data['chart_trx_yearly'] = json_encode($exec_profile['Data']['chart_trx_yearly']);
-
-        $data['total_trx_previous'] = $exec_profile['Data']['total_trx_previous'];
-        $data['total_trx_current'] = $exec_profile['Data']['total_trx_current'];
-        $data['total_sales_year'] = $exec_profile['Data']['total_sales_year'];
-        $data['total_sales_current'] = $exec_profile['Data']['total_sales_current'];
-
-        // $data['last_deposit'] = $exec_profile['Data']['last_deposit'];
-        $data['last_transaction'] = $exec_profile['Data']['last_transaction'];
-        $data['percent_growth'] = $exec_profile['Data']['percent_growth'];
-        $data['total_income'] = $exec_profile['Data']['total_income'];
-
-        //card graphy
-
-        // $data['previous_usr'] = $exec_profile['Data']['previous_usr'];
-        // $data['current_usr'] = $exec_profile['Data']['current_usr'];
-
-        // $data['previous_depo'] = $exec_profile['Data']['previous_depo'];
-        // $data['current_depo'] = $exec_profile['Data']['current_depo'];
-
-        $data['previous_income'] = $exec_profile['Data']['previous_income'];
-        $data['current_income'] = $exec_profile['Data']['current_income'];
-        //end card
-
-        //
-        $group_op = json_encode(($exec_profile['Data']['trx_group_op']));
-        $data['trx_group_op'] = array_column(json_decode($group_op, true), 'op');
-
-        $group_op_percentage = json_encode(($exec_profile['Data']['trx_group_op']));
-        $data['trx_group_op_percentage'] = array_column(json_decode($group_op_percentage, true), 'percentage');
-
-        $data['current_month_error'] = $exec_profile['Data']['current_month_error'];
-
-        $data['list_item_deactive'] = $exec_profile['Data']['list_item_deactive'];
-
-        $data['list_bank'] = $exec_profile['Data']['list_bank'];
-
-        $data['total_visitor'] = $exec_profile['Data']['total_visitor'];
-
-        $this->load->view('menu/Header',$data);
-        $this->load->view('agent/Dashboard',$data);
-        $this->load->view('menu/Footer',$data);
+        echo json_encode($exec_profile);
     }
 
 
